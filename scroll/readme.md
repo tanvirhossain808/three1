@@ -1,6 +1,6 @@
 # Three.js Journey
 
-Live site [](https://65dd8b7a602335951788e53c--lustrous-truffle-3eefb6.netlify.app/).
+Live site [https://65dd8b7a602335951788e53c--lustrous-truffle-3eefb6.netlify.app/](https://65dd8b7a602335951788e53c--lustrous-truffle-3eefb6.netlify.app/).
 ## Setup
 Run this followed commands:
 
