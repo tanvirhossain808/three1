@@ -16,6 +16,7 @@ gui
     .addColor(parameters, 'materialColor').onChange(() => {
         material.color.set(parameters.materialColor)
         particlesMateris.color.set(parameters.materialColor)
+        // for bugs fixing
     })
 
 /**
