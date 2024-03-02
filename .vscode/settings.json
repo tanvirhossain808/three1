@@ -5,6 +5,13 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        "**/Thumbs.db": true
+        "**/Thumbs.db": true,
+        "[!p]*/**": true,
+        "p[!h]*/**": true,
+        "ph[!y]*/**": true,
+        "phy[!s]*/**": true,
+        "phys[!i]*/**": true,
+        "physi[!c]*/**": true,
+        "physic[!s]*/**": true
     }
 }
