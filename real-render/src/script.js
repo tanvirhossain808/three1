@@ -81,11 +81,12 @@ scene.add(testSphere)
 
 /* models */
 gltfLoader.load(
-    // "/models/FlightHelmet/glTF/FlightHelmet.gltf",
-    "/models/hamburger.glb",
+    "/models/FlightHelmet/glTF/FlightHelmet.gltf",
+    // "/models/hamburger.glb",
 
     (gltf) => {
-        gltf.scene.scale.set(.3, .3, .3)
+        gltf.scene.scale.set(10, 10, 10)
+        // gltf.scene.scale.set(.3, .3, .3)
         gltf.scene.position.set(0, -4, 0)
         gltf.scene.rotation.y = Math.PI * .5
         scene.add(gltf.scene)
