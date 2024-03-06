@@ -75,7 +75,7 @@ const mouse = new THREE.Vector2()
 window.addEventListener("mousemove", (e) => {
     mouse.x = e.clientX / sizes.width * 2 - 1
     mouse.y = -(e.clientY / sizes.height * 2 - 1)
-
+    console.log(mouse.x);
 
 })
 
@@ -182,12 +182,12 @@ const tick = () => {
 
     // const objectsToTest = [object1, object2, object3]
     // const intersects = raycaster.intersectObjects(objectsToTest)
-    // for (const object of objectsToTest) {
-    //     object.material.color.set("red")
-    // }
-    // for (const intersect of intersects) {
-    //     intersect.object.material.color.set("blue")
-    // }
+    for (const object of objectsToTest) {
+        object.material.color.set("red")
+    }
+    for (const intersect of intersects) {
+        intersect.object.material.color.set("blue")
+    }
     if (intersects.length) {
         if (!currentIntersect) {
             console.log('mouse enter')
