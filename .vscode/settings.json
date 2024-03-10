@@ -5,13 +5,6 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        "[!b]*/**": true,
-        "b[!l]*/**": true,
-        "bl[!e]*/**": true,
-        "ble[!n]*/**": true,
-        "blen[!d]*/**": true,
-        "blend[!e]*/**": true,
-        "blende[!r]*/**": true
+        "**/Thumbs.db": true
     }
 }
