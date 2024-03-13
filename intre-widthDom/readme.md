@@ -1,7 +1,7 @@
 # Three.js Journey
 
 ## Setup
-Download [Node.js](https://nodejs.org/en/download/).
+live site [https://65f1ecc70569590de1ca3529--stalwart-blancmange-733eb9.netlify.app/](https://65f1ecc70569590de1ca3529--stalwart-blancmange-733eb9.netlify.app/).
 Run this followed commands:
 
 ``` bash
