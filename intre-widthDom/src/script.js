@@ -6,14 +6,13 @@ import { gsap } from 'gsap'
 /**
  * Loaders
  */
+let sceneReady = false
 const loadingBarElement = document.querySelector('.loading-bar')
 const loadingManager = new THREE.LoadingManager(
     // Loaded
-    () =>
-    {
+    () => {
         // Wait a little
-        window.setTimeout(() =>
-        {
+        window.setTimeout(() => {
             // Animate overlay
             gsap.to(overlayMaterial.uniforms.uAlpha, { duration: 3, value: 0, delay: 1 })
 
@@ -21,11 +20,11 @@ const loadingManager = new THREE.LoadingManager(
             loadingBarElement.classList.add('ended')
             loadingBarElement.style.transform = ''
         }, 500)
+        window.setTimeout(() => sceneReady = true, 3000)
     },
 
     // Progress
-    (itemUrl, itemsLoaded, itemsTotal) =>
-    {
+    (itemUrl, itemsLoaded, itemsTotal) => {
         // Calculate the progress and update the loadingBarElement
         const progressRatio = itemsLoaded / itemsTotal
         loadingBarElement.style.transform = `scaleX(${progressRatio})`
@@ -78,12 +77,9 @@ scene.add(overlay)
 /**
  * Update all materials
  */
-const updateAllMaterials = () =>
-{
-    scene.traverse((child) =>
-    {
-        if(child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial)
-        {
+const updateAllMaterials = () => {
+    scene.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
             // child.material.envMap = environmentMap
             child.material.envMapIntensity = debugObject.envMapIntensity
             child.material.needsUpdate = true
@@ -117,8 +113,7 @@ debugObject.envMapIntensity = 2.5
  */
 gltfLoader.load(
     '/models/DamagedHelmet/glTF/DamagedHelmet.gltf',
-    (gltf) =>
-    {
+    (gltf) => {
         gltf.scene.scale.set(2.5, 2.5, 2.5)
         gltf.scene.rotation.y = Math.PI * 0.5
         scene.add(gltf.scene)
@@ -126,6 +121,15 @@ gltfLoader.load(
         updateAllMaterials()
     }
 )
+
+// points of interest
+const raycaster = new THREE.Raycaster()
+const points = [
+    {
+        position: new THREE.Vector3(1.55, 0.3, -0.6),
+        element: document.querySelector(".point-0")
+    }
+]
 
 /**
  * Lights
@@ -146,8 +150,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -192,10 +195,42 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
-const tick = () =>
-{
+const tick = () => {
     // Update controls
     controls.update()
+    if (sceneReady) {
+
+        //Go through each point
+        for (const point of points) {
+            const screenPosition = point.position.clone()
+            screenPosition.project(camera)
+
+            raycaster.setFromCamera(screenPosition, camera)
+            const interests = raycaster.intersectObjects(scene.children, true)
+            if (interests.length === 0) {
+                point.element.classList.add("visible")
+            }
+            else {
+                const intersectionDistance = interests[0].distance
+                const pointDestance = point.position.distanceTo(camera.position)
+                if (intersectionDistance < pointDestance) {
+                    point.element.classList.remove("visible")
+
+                }
+                else {
+                    point.element.classList.add("visible")
+
+                }
+            }
+
+            // console.log(screenPosition.x)
+            const translateX = screenPosition.x * sizes.width * 0.5
+            const translateY = screenPosition.y * sizes.height * 0.5
+            point.element.style.transform = `translateX(${translateX}px) translateY(${-translateY}px)`
+
+        }
+    }
+
 
     // Render
     renderer.render(scene, camera)
